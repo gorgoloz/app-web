@@ -1,44 +1,26 @@
-Documentazione
-Applicazione web per gestire un diario personale di lettura. Permette la registrazione e il login degli utenti, e la gestione dei libri letti o in lettura.
+# Diario di Lettura
 
-Struttura dei file
-index.php Pagina di login e registrazione dashboard.php Area personale dell'utente style.css Stile grafico dell'applicazione db.sql Script per creare il database
+Applicazione web per gestire un diario personale di lettura. Gli utenti possono registrarsi, fare il login e tenere traccia dei libri che stanno leggendo.
 
-Database
-Il database diario_lettura contiene due tabelle:
+## File del progetto
 
-utenti – memorizza gli utenti registrati con username e password hashata.
+- index.php: pagina di login e registrazione
+- dashboard.php: area personale dell'utente
+- style.css: stile grafico
+- db.sql: script per creare il database
 
-libri – memorizza i libri di ogni utente con: titolo, pagina attuale, note e data di inserimento.
+## Database
 
-index.php – Login e Registrazione
-All'apertura della pagina viene mostrato il form di login. Tramite un pulsante è possibile passare al form di registrazione (toggle JS).
+Il database si chiama diario_lettura e contiene due tabelle. La tabella utenti salva username e password. La tabella libri salva i libri di ogni utente con titolo, pagina attuale, note e data di inserimento, collegata agli utenti tramite utente_id.
 
-Registrazione: controlla che l'username non sia già in uso, poi salva l'utente con la password hashata tramite password_hash().
+## index.php
 
-Login: cerca l'utente nel DB e verifica la password con password_verify(). Se corretta, salva l'id e lo username in sessione e reindirizza alla dashboard.
+Mostra il form di login. Con un pulsante si passa alla registrazione e viceversa, usando style.display per mostrare e nascondere i due form. La registrazione salva l'utente con la password hashata tramite password_hash(). Il login verifica la password con password_verify() e se corretta salva i dati in sessione e manda alla dashboard. I form vengono validati con addEventListener prima dell'invio per controllare che i campi non siano vuoti.
 
-JavaScript:
+## dashboard.php
 
-mostraRegistrazione() / mostraLogin() – mostrano e nascondono i due form con style.display
-Validazione con addEventListener('submit') – controlla che i campi non siano vuoti prima di inviare il form
-dashboard.php – Area Utente
-Accessibile solo se l'utente è loggato (controlla $_SESSION['utente_id'], altrimenti reindirizza al login).
+Accessibile solo se si è loggati, altrimenti rimanda al login. Permette di inserire un nuovo libro tramite un form che si mostra e nasconde con un pulsante. Mostra la lista di tutti i libri salvati in una tabella. Ogni libro ha un pulsante Modifica che apre un form inline precompilato con i dati esistenti. Al salvataggio viene eseguita una query UPDATE. Il logout distrugge la sessione con session_destroy() e rimanda al login.
 
-Inserimento libro: form con tre campi (titolo, pagina attuale, note). I dati vengono salvati nel DB con una query INSERT.
+## Come avviare
 
-Modifica libro: ogni riga della tabella ha un pulsante "Modifica" che apre un form inline precompilato con i dati esistenti. Alla conferma viene eseguita una query UPDATE.
-
-Lista libri: recupera tutti i libri dell'utente con una query SELECT e li mostra in una tabella.
-
-Logout: distrugge la sessione con session_destroy() e reindirizza al login.
-
-JavaScript:
-
-toggleForm() – mostra/nasconde il form di inserimento
-toggleModifica(id) – mostra/nasconde il form di modifica per ogni libro
-Validazione con addEventListener e onsubmit – controlla che il titolo non sia vuoto
-Come avviare il progetto
-Importare db.sql in phpMyAdmin per creare il database
-Copiare i file PHP e CSS nella cartella htdocs
-Aprire http://localhost nel browser
+Importare db.sql in phpMyAdmin, copiare i file nella cartella del server locale e aprire http://localhost/nomecartella/ nel browser.
