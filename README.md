@@ -23,4 +23,4 @@ Accessibile solo se si è loggati, altrimenti rimanda al login. Permette di inse
 
 ## Come avviare
 
-Importare db.sql in phpMyAdmin, copiare i file nella cartella del server locale e aprire http://localhost/nomecartella/ nel browser.
+Importare db.sql in phpMyAdmin, copiare i file nella cartella htdocs e aprire http://localhost/ nel browser.
